@@ -7,7 +7,7 @@ class GuitarNote(Note):
             from the thinnest(1) to the thickest(6)
     :type string: int
     :param fret: the fret(0-14)
-    :tpye fret: int
+    :type fret: int
     '''
 
     open_string_notes = {

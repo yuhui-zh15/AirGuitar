@@ -5,7 +5,7 @@ class Player:
     '''Use this to play notes.
 
     :param live: if the notes should be played immediately when added.
-    :param live: bool
+    :type live: bool
     '''
 
     fluidsynth.init('raw/FluidR3_GM.sf2')
