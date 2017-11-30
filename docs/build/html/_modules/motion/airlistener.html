@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>motion.swipehandler &mdash; AirGuitar  documentation</title>
+  <title>motion.airlistener &mdash; AirGuitar  documentation</title>
   
 
   
@@ -135,7 +135,7 @@
         
           <li><a href="../index.html">Module code</a> &raquo;</li>
         
-      <li>motion.swipehandler</li>
+      <li>motion.airlistener</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -152,29 +152,29 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <h1>Source code for motion.swipehandler</h1><div class="highlight"><pre>
+  <h1>Source code for motion.airlistener</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">Leap</span>
-<span class="kn">from</span> <span class="nn">sound</span> <span class="k">import</span> <span class="n">Player</span><span class="p">,</span> <span class="n">GuitarChord</span>
 
-<div class="viewcode-block" id="SwipeHandler"><a class="viewcode-back" href="../../motion.html#motion.swipehandler.SwipeHandler">[docs]</a><span class="k">class</span> <span class="nc">SwipeHandler</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="AirListener"><a class="viewcode-back" href="../../motion.html#motion.airlistener.AirListener">[docs]</a><span class="k">class</span> <span class="nc">AirListener</span><span class="p">(</span><span class="n">Leap</span><span class="o">.</span><span class="n">Listener</span><span class="p">):</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">controller</span><span class="p">):</span>
-        <span class="n">controller</span><span class="o">.</span><span class="n">enable_gesture</span><span class="p">(</span><span class="n">Leap</span><span class="o">.</span><span class="n">Gesture</span><span class="o">.</span><span class="n">TYPE_SWIPE</span><span class="p">)</span>
-        <span class="n">controller</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;Gesture.Swipe.MinLength&#39;</span><span class="p">,</span> <span class="mf">200.0</span><span class="p">)</span>
-        <span class="n">controller</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Swipe handler added.&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">AirListener</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">handler_list</span> <span class="o">=</span> <span class="p">[]</span>
 
-<div class="viewcode-block" id="SwipeHandler.process"><a class="viewcode-back" href="../../motion.html#motion.swipehandler.SwipeHandler.process">[docs]</a>    <span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frame</span><span class="p">):</span>
-        <span class="n">swipe</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="k">for</span> <span class="n">gesture</span> <span class="ow">in</span> <span class="n">frame</span><span class="o">.</span><span class="n">gestures</span><span class="p">():</span>
-            <span class="k">if</span> <span class="n">gesture</span><span class="o">.</span><span class="n">type</span> <span class="ow">is</span> <span class="n">Leap</span><span class="o">.</span><span class="n">Gesture</span><span class="o">.</span><span class="n">TYPE_SWIPE</span><span class="p">:</span>
-                <span class="n">swipe</span> <span class="o">=</span> <span class="n">Leap</span><span class="o">.</span><span class="n">SwipeGesture</span><span class="p">(</span><span class="n">gesture</span><span class="p">)</span>
+<div class="viewcode-block" id="AirListener.on_connect"><a class="viewcode-back" href="../../motion.html#motion.airlistener.AirListener.on_connect">[docs]</a>    <span class="k">def</span> <span class="nf">on_connect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">controller</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Connected&quot;</span><span class="p">)</span>
+        <span class="n">controller</span><span class="o">.</span><span class="n">set_policy</span><span class="p">(</span><span class="n">Leap</span><span class="o">.</span><span class="n">Controller</span><span class="o">.</span><span class="n">POLICY_BACKGROUND_FRAMES</span><span class="p">)</span></div>
 
-        <span class="k">if</span> <span class="n">swipe</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">swipe</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">Leap</span><span class="o">.</span><span class="n">SwipeGesture</span><span class="o">.</span><span class="n">STATE_START</span>\
-            <span class="ow">and</span> <span class="n">Leap</span><span class="o">.</span><span class="n">Finger</span><span class="p">(</span><span class="n">swipe</span><span class="o">.</span><span class="n">pointable</span><span class="p">)</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">Leap</span><span class="o">.</span><span class="n">Finger</span><span class="o">.</span><span class="n">TYPE_INDEX</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Got swipe gesture! z=</span><span class="si">%f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">swipe</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">z</span><span class="p">)</span>
-                <span class="n">Player</span><span class="o">.</span><span class="n">play_notes</span><span class="p">(</span><span class="n">GuitarChord</span><span class="p">(</span><span class="s1">&#39;random&#39;</span><span class="p">))</span></div></div>
+<div class="viewcode-block" id="AirListener.on_disconnect"><a class="viewcode-back" href="../../motion.html#motion.airlistener.AirListener.on_disconnect">[docs]</a>    <span class="k">def</span> <span class="nf">on_disconnect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">controller</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Disconnected&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AirListener.on_frame"><a class="viewcode-back" href="../../motion.html#motion.airlistener.AirListener.on_frame">[docs]</a>    <span class="k">def</span> <span class="nf">on_frame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">controller</span><span class="p">):</span>
+        <span class="n">frame</span> <span class="o">=</span> <span class="n">controller</span><span class="o">.</span><span class="n">frame</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">handler</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">handler_list</span><span class="p">:</span>
+            <span class="n">handler</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AirListener.add_handler"><a class="viewcode-back" href="../../motion.html#motion.airlistener.AirListener.add_handler">[docs]</a>    <span class="k">def</span> <span class="nf">add_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">handler</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">handler_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">handler</span><span class="p">)</span></div></div>
 </pre></div>
 
            </div>

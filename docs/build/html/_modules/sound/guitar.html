@@ -179,18 +179,12 @@
         <span class="nb">super</span><span class="p">(</span><span class="n">GuitarNote</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>\
             <span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">open_string_notes</span><span class="p">[</span><span class="n">string</span><span class="p">]</span> <span class="o">+</span> <span class="n">fret</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="GuitarChord"><a class="viewcode-back" href="../../sound.html#sound.guitar.GuitarChord">[docs]</a><span class="k">class</span> <span class="nc">GuitarChord</span><span class="p">(</span><span class="n">NoteContainer</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;Return a list of notes in that chord</span>
+<div class="viewcode-block" id="Guitar"><a class="viewcode-back" href="../../sound.html#sound.guitar.Guitar">[docs]</a><span class="k">class</span> <span class="nc">Guitar</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;A guitar simulator.</span>
 
-<span class="sd">    :param chord_name: name of the chord</span>
-<span class="sd">    :type chord_name: str</span>
-
-<span class="sd">    .. code-block:: python</span>
-
-<span class="sd">        from sound import Player, GuitarChord</span>
-<span class="sd">        G_chord = GuitarChord(&#39;G&#39;)</span>
-<span class="sd">        Player.play_notes(G_chord)</span>
+<span class="sd">    :param player: a Player instance which should have `play_notes()` method.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
+
     <span class="n">chord_dict</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s1">&#39;G&#39;</span><span class="p">:</span> <span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">)],</span>
         <span class="s1">&#39;Am&#39;</span><span class="p">:</span> <span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">)],</span>
@@ -202,15 +196,55 @@
         <span class="s1">&#39;D7&#39;</span><span class="p">:</span> <span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">)],</span>
     <span class="p">}</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chord_name</span><span class="o">=</span><span class="s1">&#39;random&#39;</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">chord_name</span> <span class="o">==</span> <span class="s1">&#39;random&#39;</span><span class="p">:</span>
-            <span class="n">chord_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">chord_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">()[</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">chord_dict</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)]</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">player</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">player</span> <span class="o">=</span> <span class="n">player</span>
+
+<div class="viewcode-block" id="Guitar.reset"><a class="viewcode-back" href="../../sound.html#sound.guitar.Guitar.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Release the left hand.&#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">string_states</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">7</span></div>
+
+<div class="viewcode-block" id="Guitar.set_string"><a class="viewcode-back" href="../../sound.html#sound.guitar.Guitar.set_string">[docs]</a>    <span class="k">def</span> <span class="nf">set_string</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">string</span><span class="p">,</span> <span class="n">fret</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Press down a fret on a string.</span>
+
+<span class="sd">        :param string: the number of the string (1~6)</span>
+<span class="sd">        :type string: int</span>
+<span class="sd">        :param fret: the number of the fret (-1~14). -1 for mute. 0 for open.</span>
+<span class="sd">        :type fret: int</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="mi">1</span> <span class="o">&lt;=</span> <span class="n">string</span> <span class="ow">and</span> <span class="n">string</span> <span class="o">&lt;=</span> <span class="mi">6</span> <span class="ow">and</span> <span class="o">-</span><span class="mi">1</span> <span class="o">&lt;=</span> <span class="n">fret</span> <span class="ow">and</span> <span class="n">fret</span> <span class="o">&lt;=</span> <span class="mi">14</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">string_states</span><span class="p">[</span><span class="n">string</span><span class="p">]</span> <span class="o">=</span> <span class="n">fret</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Set string </span><span class="si">%d</span><span class="s1"> fret </span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">fret</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;String or fret index out of range!&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Guitar.set_chord"><a class="viewcode-back" href="../../sound.html#sound.guitar.Guitar.set_chord">[docs]</a>    <span class="k">def</span> <span class="nf">set_chord</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chord_name</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Press a chord on the guitar.</span>
+
+<span class="sd">        Note: all previously set states will be discarded.</span>
+<span class="sd">        </span>
+<span class="sd">        :param chord_name: name of the chord</span>
+<span class="sd">        :type chord_name: str</span>
+<span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="n">chord_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">chord_dict</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Chord not added!&#39;</span><span class="p">)</span>
             <span class="k">return</span>
-        <span class="n">chord_pos</span><span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">chord_dict</span><span class="p">[</span><span class="n">chord_name</span><span class="p">]</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">GuitarChord</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>\
-            <span class="o">.</span><span class="fm">__init__</span><span class="p">([</span><span class="n">GuitarNote</span><span class="p">(</span><span class="o">*</span><span class="n">pos</span><span class="p">)</span> <span class="k">for</span> <span class="n">pos</span> <span class="ow">in</span> <span class="n">chord_pos</span><span class="p">])</span></div>
+        <span class="c1"># Mute all the strings</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">string_states</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="mi">7</span>
+        <span class="c1"># Get pressed positions</span>
+        <span class="n">chord_pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">chord_dict</span><span class="p">[</span><span class="n">chord_name</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">pos</span> <span class="ow">in</span> <span class="n">chord_pos</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_string</span><span class="p">(</span><span class="o">*</span><span class="n">pos</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Set chord &#39;</span> <span class="o">+</span> <span class="n">chord_name</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Guitar.play_string"><a class="viewcode-back" href="../../sound.html#sound.guitar.Guitar.play_string">[docs]</a>    <span class="k">def</span> <span class="nf">play_string</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">string</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Play a specific string&#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="mi">1</span> <span class="o">&lt;=</span> <span class="n">string</span> <span class="ow">and</span> <span class="n">string</span> <span class="o">&lt;=</span> <span class="mi">6</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">string_states</span><span class="p">[</span><span class="n">string</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">player</span><span class="o">.</span><span class="n">play_notes</span><span class="p">(</span><span class="n">GuitarNote</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">string_states</span><span class="p">[</span><span class="n">string</span><span class="p">]))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;String index out of range!&#39;</span><span class="p">)</span></div></div>
 </pre></div>
 
            </div>

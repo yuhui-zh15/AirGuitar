@@ -1,18 +1,18 @@
 motion
 ======
 
-motion\.leapeventlistener
--------------------------
+motion\.airlistener
+-------------------
 
-.. automodule:: motion.leapeventlistener
+.. automodule:: motion.airlistener
     :members:
     :undoc-members:
     :show-inheritance:
 
-motion\.swipehandler
---------------------
+motion\.strumminghandler
+------------------------
 
-.. automodule:: motion.swipehandler
+.. automodule:: motion.strumminghandler
     :members:
     :undoc-members:
     :show-inheritance:
