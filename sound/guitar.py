@@ -1,4 +1,5 @@
 from mingus.containers import Note, NoteContainer
+import random
 
 class GuitarNote(Note):
     '''Represent a note on guitar.
@@ -32,9 +33,8 @@ class GuitarChord(NoteContainer):
     .. code-block:: python
 
         from sound import Player, GuitarChord
-        p = Player()
         G_chord = GuitarChord('G')
-        p.play_notes(G_chord)
+        Player.play_notes(G_chord)
     '''
     chord_dict = {
         'G': [(1, 3), (2, 0), (3, 0), (4, 0), (5, 2), (6, 3)],
@@ -47,11 +47,12 @@ class GuitarChord(NoteContainer):
         'D7': [(1, 2), (2, 1), (3, 2), (4, 0)],
     }
 
-    def __init__(self, chord_name):
+    def __init__(self, chord_name='random'):
+        if chord_name == 'random':
+            chord_name = self.chord_dict.keys()[random.randint(0, len(self.chord_dict)-1)]
         if chord_name not in self.chord_dict:
             print('Chord not added!')
             return
         chord_pos= self.chord_dict[chord_name]
         super(GuitarChord, self)\
             .__init__([GuitarNote(*pos) for pos in chord_pos])
-
