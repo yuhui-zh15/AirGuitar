@@ -87,6 +87,7 @@
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../motion.html">motion</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../sound.html">sound</a></li>
 </ul>
 
@@ -165,11 +166,10 @@
     <span class="n">fluidsynth</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="s1">&#39;raw/FluidR3_GM.sf2&#39;</span><span class="p">)</span>
     <span class="n">fluidsynth</span><span class="o">.</span><span class="n">set_instrument</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">25</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">live</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">live</span> <span class="o">=</span> <span class="n">live</span>
-        <span class="k">pass</span>
+    <span class="n">live</span> <span class="o">=</span> <span class="kc">True</span>
 
-<div class="viewcode-block" id="Player.play_notes"><a class="viewcode-back" href="../../sound.html#sound.player.Player.play_notes">[docs]</a>    <span class="k">def</span> <span class="nf">play_notes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">notes</span><span class="p">):</span>
+<div class="viewcode-block" id="Player.play_notes"><a class="viewcode-back" href="../../sound.html#sound.player.Player.play_notes">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">play_notes</span><span class="p">(</span><span class="n">notes</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Add a note or a list of notes to the player</span>
 <span class="sd">        :param notes: can be a note(int/str/Note) or \</span>
 <span class="sd">                notes(list of int, NoteContainer)</span>
@@ -177,13 +177,12 @@
 <span class="sd">        .. code-block:: python</span>
 
 <span class="sd">            from sound import Player, GuitarNote</span>
-<span class="sd">            p = Player()</span>
-<span class="sd">            p.play_notes(48)                # play C-4</span>
-<span class="sd">            p.play_notes(&#39;C-4&#39;)             # play C-4</span>
-<span class="sd">            p.play_notes(GuitarNote(1, 1))  # play fret 1 on string 1</span>
+<span class="sd">            Player.play_notes(48)                # play C-4</span>
+<span class="sd">            Player.play_notes(&#39;C-4&#39;)             # play C-4</span>
+<span class="sd">            Player.play_notes(GuitarNote(1, 1))  # play fret 1 on string 1</span>
 <span class="sd">            G_chord = [GuitarNote(1, 3), GuitarNote(2, 0), GuitarNote(3, 0),\</span>
 <span class="sd">                    GuitarNote(4, 0), GuitarNote(5, 2), GuitarNote(6, 3)]</span>
-<span class="sd">            p.play_notes(G_chord)</span>
+<span class="sd">            Player.play_notes(G_chord)</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">notes</span> <span class="o">=</span> <span class="n">Note</span><span class="p">(</span><span class="n">notes</span><span class="p">)</span>
@@ -194,15 +193,16 @@
         <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
             <span class="k">pass</span>
 
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">live</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">Player</span><span class="o">.</span><span class="n">live</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">notes</span><span class="p">,</span> <span class="n">Note</span><span class="p">):</span>
                 <span class="n">fluidsynth</span><span class="o">.</span><span class="n">play_Note</span><span class="p">(</span><span class="n">notes</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Playing Note&#39;</span><span class="p">,</span> <span class="n">notes</span><span class="p">)</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">notes</span><span class="p">,</span> <span class="n">NoteContainer</span><span class="p">):</span>
                 <span class="n">fluidsynth</span><span class="o">.</span><span class="n">play_NoteContainer</span><span class="p">(</span><span class="n">notes</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Playing Notes&#39;</span><span class="p">,</span> <span class="n">notes</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="c1"># TODO: keep the notes in a event list.</span>
             <span class="k">pass</span></div></div>
-
 </pre></div>
 
            </div>
