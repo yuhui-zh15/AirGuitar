@@ -2,26 +2,34 @@
 ## Introduction
 AirGuitar = guitar + leap
 
+## Documentation
+Can be found at [AirGuitar Doc](https://yuhui-zh15.github.io/AirGuitar/).
+
 ## Setup
 ### Python and Leap Motion SDK
 Python2.7 is required.
 
-1. Download [LeapSDK v2.3.1](https://developer.leapmotion.com/sdk/v2)
-2. Move the `LeapSDK/lib` folder to the empty `lib` folder in the project.
-3. Add the project root path to python2 sys.path, for example, on unix:
+1. Download [LeapSDK v2.3.1](https://developer.leapmotion.com/sdk/v2) and add `lib` folder to python path.
 
 ```bash
-export PYTHONPATH=$PYTHONPATH:<path/to/AirGuitar>
+export PYTHONPATH=$PYTHONPATH:<path/to/LeapSDK/lib>
 # Do this everytime when you open a terminal or add this line to ~/.profile
 ```
 
-Now you should import Leap properly.
+2. Add the project root path to python2 sys.path, for example, on unix:
 
-```python
-import lib.Leap
+```bash
+export PYTHONPATH=$PYTHONPATH:<path/to/AirGuitar>
 ```
 
-If not, inspect your sys.path to see if the `AirGuitar` folder is included.
+Now you should import Leap and the AirGuitar modulesproperly.
+
+```python
+import Leap
+import sound
+```
+
+If not, inspect your sys.path to see if the `AirGuitar` and `LeapSDK/lib` folder is included.
 
 ```python
 import sys

@@ -36,7 +36,7 @@
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="AirGuitar  documentation" href="index.html"/>
-        <link rel="prev" title="Welcome to AirGuitar’s documentation!" href="index.html"/> 
+        <link rel="prev" title="motion" href="motion.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -87,6 +87,7 @@
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="motion.html">motion</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">sound</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#module-sound.player">sound.player</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-sound.guitar">sound.guitar</a></li>
@@ -161,7 +162,7 @@
 <span id="sound-player"></span><h2>sound.player<a class="headerlink" href="#module-sound.player" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="sound.player.Player">
-<em class="property">class </em><code class="descclassname">sound.player.</code><code class="descname">Player</code><span class="sig-paren">(</span><em>live=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sound/player.html#Player"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sound.player.Player" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">sound.player.</code><code class="descname">Player</code><a class="reference internal" href="_modules/sound/player.html#Player"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sound.player.Player" title="Permalink to this definition">¶</a></dt>
 <dd><p>Use this to play notes.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -171,18 +172,22 @@
 </tr>
 </tbody>
 </table>
-<dl class="method">
+<dl class="attribute">
+<dt id="sound.player.Player.live">
+<code class="descname">live</code><em class="property"> = True</em><a class="headerlink" href="#sound.player.Player.live" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
 <dt id="sound.player.Player.play_notes">
-<code class="descname">play_notes</code><span class="sig-paren">(</span><em>notes</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sound/player.html#Player.play_notes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sound.player.Player.play_notes" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">play_notes</code><span class="sig-paren">(</span><em>notes</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sound/player.html#Player.play_notes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sound.player.Player.play_notes" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add a note or a list of notes to the player
 :param notes: can be a note(int/str/Note) or                 notes(list of int, NoteContainer)</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sound</span> <span class="kn">import</span> <span class="n">Player</span><span class="p">,</span> <span class="n">GuitarNote</span>
-<span class="n">p</span> <span class="o">=</span> <span class="n">Player</span><span class="p">()</span>
-<span class="n">p</span><span class="o">.</span><span class="n">play_notes</span><span class="p">(</span><span class="mi">48</span><span class="p">)</span>                <span class="c1"># play C-4</span>
-<span class="n">p</span><span class="o">.</span><span class="n">play_notes</span><span class="p">(</span><span class="s1">&#39;C-4&#39;</span><span class="p">)</span>             <span class="c1"># play C-4</span>
-<span class="n">p</span><span class="o">.</span><span class="n">play_notes</span><span class="p">(</span><span class="n">GuitarNote</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>  <span class="c1"># play fret 1 on string 1</span>
+<span class="n">Player</span><span class="o">.</span><span class="n">play_notes</span><span class="p">(</span><span class="mi">48</span><span class="p">)</span>                <span class="c1"># play C-4</span>
+<span class="n">Player</span><span class="o">.</span><span class="n">play_notes</span><span class="p">(</span><span class="s1">&#39;C-4&#39;</span><span class="p">)</span>             <span class="c1"># play C-4</span>
+<span class="n">Player</span><span class="o">.</span><span class="n">play_notes</span><span class="p">(</span><span class="n">GuitarNote</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>  <span class="c1"># play fret 1 on string 1</span>
 <span class="n">G_chord</span> <span class="o">=</span> <span class="p">[</span><span class="n">GuitarNote</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">GuitarNote</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">GuitarNote</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>                    <span class="n">GuitarNote</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">GuitarNote</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">GuitarNote</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">)]</span>
-<span class="n">p</span><span class="o">.</span><span class="n">play_notes</span><span class="p">(</span><span class="n">G_chord</span><span class="p">)</span>
+<span class="n">Player</span><span class="o">.</span><span class="n">play_notes</span><span class="p">(</span><span class="n">G_chord</span><span class="p">)</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -218,7 +223,7 @@
 
 <dl class="class">
 <dt id="sound.guitar.GuitarChord">
-<em class="property">class </em><code class="descclassname">sound.guitar.</code><code class="descname">GuitarChord</code><span class="sig-paren">(</span><em>chord_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sound/guitar.html#GuitarChord"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sound.guitar.GuitarChord" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">sound.guitar.</code><code class="descname">GuitarChord</code><span class="sig-paren">(</span><em>chord_name='random'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sound/guitar.html#GuitarChord"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sound.guitar.GuitarChord" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">mingus.containers.note_container.NoteContainer</span></code></p>
 <p>Return a list of notes in that chord</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -230,9 +235,8 @@
 </tbody>
 </table>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sound</span> <span class="kn">import</span> <span class="n">Player</span><span class="p">,</span> <span class="n">GuitarChord</span>
-<span class="n">p</span> <span class="o">=</span> <span class="n">Player</span><span class="p">()</span>
 <span class="n">G_chord</span> <span class="o">=</span> <span class="n">GuitarChord</span><span class="p">(</span><span class="s1">&#39;G&#39;</span><span class="p">)</span>
-<span class="n">p</span><span class="o">.</span><span class="n">play_notes</span><span class="p">(</span><span class="n">G_chord</span><span class="p">)</span>
+<span class="n">Player</span><span class="o">.</span><span class="n">play_notes</span><span class="p">(</span><span class="n">G_chord</span><span class="p">)</span>
 </pre></div>
 </div>
 <dl class="attribute">
@@ -256,7 +260,7 @@
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
       
-        <a href="index.html" class="btn btn-neutral" title="Welcome to AirGuitar’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="motion.html" class="btn btn-neutral" title="motion" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

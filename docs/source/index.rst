@@ -10,5 +10,6 @@ Welcome to AirGuitar's documentation!
    :maxdepth: 2
    :caption: Contents:
 
+   motion
    sound
 
