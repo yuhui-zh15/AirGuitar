@@ -67,6 +67,7 @@ class Guitar(object):
         '''Press a chord on the guitar.
 
         Note: all previously set states will be discarded.
+        
         :param chord_name: name of the chord
         :type chord_name: str
         '''

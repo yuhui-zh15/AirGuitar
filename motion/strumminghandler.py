@@ -37,6 +37,7 @@ class StrummingHandler(object):
         '''When the right index finger updates its position.
 
         Play notes when it passes a string.
+
         :param new_z: the new position on z axis
         :type new_z: float
         '''
