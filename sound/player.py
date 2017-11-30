@@ -2,7 +2,7 @@ from mingus.containers import Note, NoteContainer
 from mingus.midi import fluidsynth
 
 class Player:
-    '''Use this to play notes.
+    '''Sound provider for an instrument simulator.
 
     :param live: if the notes should be played immediately when added.
     :type live: bool
