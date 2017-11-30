@@ -24,18 +24,12 @@ class GuitarNote(Note):
         super(GuitarNote, self)\
             .__init__(self.open_string_notes[string] + fret)
 
-class GuitarChord(NoteContainer):
-    '''Return a list of notes in that chord
+class Guitar(object):
+    '''A guitar simulator.
 
-    :param chord_name: name of the chord
-    :type chord_name: str
-
-    .. code-block:: python
-
-        from sound import Player, GuitarChord
-        G_chord = GuitarChord('G')
-        Player.play_notes(G_chord)
+    :param player: a Player instance which should have `play_notes()` method.
     '''
+
     chord_dict = {
         'G': [(1, 3), (2, 0), (3, 0), (4, 0), (5, 2), (6, 3)],
         'Am': [(1, 0), (2, 1), (3, 2), (4, 2), (5, 0)],
@@ -47,12 +41,51 @@ class GuitarChord(NoteContainer):
         'D7': [(1, 2), (2, 1), (3, 2), (4, 0)],
     }
 
-    def __init__(self, chord_name='random'):
-        if chord_name == 'random':
-            chord_name = self.chord_dict.keys()[random.randint(0, len(self.chord_dict)-1)]
+    def __init__(self, player):
+        self.reset()
+        self.player = player
+
+    def reset(self):
+        '''Release the left hand.'''
+        self.string_states = [0] * 7
+
+    def set_string(self, string, fret):
+        '''Press down a fret on a string.
+
+        :param string: the number of the string (1~6)
+        :type string: int
+        :param fret: the number of the fret (-1~14). -1 for mute. 0 for open.
+        :type fret: int
+        '''
+        if 1 <= string and string <= 6 and -1 <= fret and fret <= 14:
+            self.string_states[string] = fret
+            print('Set string %d fret %d' % (string, fret))
+        else:
+            print('String or fret index out of range!')
+
+    def set_chord(self, chord_name):
+        '''Press a chord on the guitar.
+
+        Note: all previously set states will be discarded.
+        :param chord_name: name of the chord
+        :type chord_name: str
+        '''
         if chord_name not in self.chord_dict:
             print('Chord not added!')
             return
-        chord_pos= self.chord_dict[chord_name]
-        super(GuitarChord, self)\
-            .__init__([GuitarNote(*pos) for pos in chord_pos])
+        # Mute all the strings
+        self.string_states = [-1] * 7
+        # Get pressed positions
+        chord_pos = self.chord_dict[chord_name]
+        for pos in chord_pos:
+            self.set_string(*pos)
+
+        print('Set chord ' + chord_name)
+
+    def play_string(self, string):
+        '''Play a specific string'''
+        if 1 <= string and string <= 6:
+            if self.string_states[string] >= 0:
+                self.player.play_notes(GuitarNote(string, self.string_states[string]))
+        else:
+            print('String index out of range!')
