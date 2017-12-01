@@ -7,57 +7,59 @@ class ChordHandler(object):
     :param guitar: the guitar that the handler takes action on.
     '''
 
-    chord_positions = [None, -150, -100, -50, 0, 50, 100]
-    chord_list = [None, 'G', 'Am', 'Bm', 'C', 'D', 'Em']
+    division_x = [-200, -50]
+    division_z = [-100, 100]
+
+    chord_list = [['G', 'Am', 'Bm'], ['C', 'D', 'Em'], ['G', 'Am', 'Bm']] # Fron left to right, from up to bottom
 
     def __init__(self, controller, guitar):
         self.controller = controller
         self.guitar = guitar
-        self.last_z = None
-        print('Strumming handler added.')
+        print('Chord handler added.')
 
     def process(self, frame):
-        '''Capture the left hand's motion in the frame.'''
+        '''Capture the left hand's keytap in the frame.'''
+        key_tap = None
+        for gesture in frame.gestures():
+            if gesture.type is Leap.Gesture.TYPE_KEY_TAP:
+                key_tap = Leap.KeyTapGesture(gesture)
+        if key_tap is None: return
+        
         left_hand = None
-        for hand in frame.hands:
+        for hand in key_tap.hands:
             if hand.is_left:
                 left_hand = hand
                 break
         if left_hand is None: return
 
-        index_finger = None
-        for finger in left_hand.fingers:
-            if finger.type == Leap.Finger.TYPE_INDEX:
-                index_finger = finger
-                break
+        touch_x, touch_z = key_tap.position.x, key_tap.position.z
+        self.move_to(touch_x, touch_z)
 
-        new_z = index_finger.joint_position(Leap.Finger.JOINT_TIP).z
-        self.move_to(new_z)
+    def move_to(self, touch_x, touch_z):
+        '''When the left finger tap change chord.
 
-    def move_to(self, new_z):
-        '''When the left index finger updates its position.
+        Change chords when keytap.
 
-        Change chords when click.
-
-        :param new_z: the new position on z axis
-        :type new_z: float
+        :param touch_x: the new position on x axis
+        :type touch_x: float
+        :param touch_z: the new position on x axis
+        :type touch_z: float
         '''
-        if (self.last_z == None):
-            self.last_z = new_z
-            return
 
-        # Strumming down
-        if self.last_z > new_z:
-            for string in range(6, 0, -1):
-                if self.last_z > self.chord_positions[string]\
-                and self.chord_positions[string] > new_z:
-                    self.guitar.set_chord(self.chord_list[string])
+        if (touch_x < self.division_x[0]):
+            x_index = 0
+        elif (self.division_x[0] < touch_x and touch_x < self.division_x[1]):
+            x_index = 1
+        elif (self.division_x[1] < touch_x):
+            x_index = 2
 
-        # Strumming up
-        if new_z > self.last_z:
-            for string in range(1, 7):
-                if self.last_z < self.chord_positions[string]\
-                and self.chord_positions[string] < new_z:
-                    self.guitar.set_chord(self.chord_list[string])
+        if (touch_z < self.division_z[0]):
+            z_index = 0
+        elif (self.division_z[0] < touch_z and touch_z < self.division_z[1]):
+            z_index = 1
+        elif (self.division_z[1] < touch_z):
+            z_index = 2
+        
+        # Set chord
+        self.guitar.set_chord(self.chord_list[z_index][x_index])
 
-        self.last_z = new_z
