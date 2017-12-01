@@ -14,6 +14,11 @@ class ChordHandler(object):
 
     def __init__(self, controller, guitar):
         self.controller = controller
+        self.controller.enable_gesture(Leap.Gesture.TYPE_KEY_TAP)
+        self.controller.config.set("Gesture.KeyTap.MinDownVelocity", 30.0)
+        self.controller.config.set("Gesture.KeyTap.HistorySeconds", .2)
+        self.controller.config.set("Gesture.KeyTap.MinDistance", 0.8)
+        self.controller.config.save()
         self.guitar = guitar
         print('Chord handler added.')
 

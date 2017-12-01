@@ -7,13 +7,7 @@ class App(object):
     def start(self):
         print('AirGuitar Started')
         self.guitar = Guitar(Player())
-
         self.controller = Leap.Controller()
-        self.controller.enable_gesture(Leap.Gesture.TYPE_KEY_TAP)
-        self.controller.config.set("Gesture.KeyTap.MinDownVelocity", 30.0)
-        self.controller.config.set("Gesture.KeyTap.HistorySeconds", .2)
-        self.controller.config.set("Gesture.KeyTap.MinDistance", 0.8)
-        self.controller.config.save()
         self.listener = AirListener()
 
         self.listener.add_handler(ChordHandler(self.controller, self.guitar))
