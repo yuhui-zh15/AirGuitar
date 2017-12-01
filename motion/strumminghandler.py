@@ -29,6 +29,7 @@ class StrummingHandler(object):
             if finger.type == Leap.Finger.TYPE_INDEX:
                 index_finger = finger
                 break
+        if index_finger is None: return
 
         new_z = index_finger.joint_position(Leap.Finger.JOINT_TIP).z
         self.move_to(new_z)
