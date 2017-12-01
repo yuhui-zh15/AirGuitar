@@ -13,6 +13,7 @@ class StrummingHandler(object):
         self.controller = controller
         self.guitar = guitar
         self.last_z = None
+        self.max_y = 220 # play NO sound when index finger is too high
         print('Strumming handler added.')
 
     def process(self, frame):
@@ -30,6 +31,9 @@ class StrummingHandler(object):
                 index_finger = finger
                 break
         if index_finger is None: return
+
+        new_y = index_finger.joint_position(Leap.Finger.JOINT_TIP).y
+        if new_y > self.max_y: return
 
         new_z = index_finger.joint_position(Leap.Finger.JOINT_TIP).z
         self.move_to(new_z)
