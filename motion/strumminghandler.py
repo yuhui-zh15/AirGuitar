@@ -13,6 +13,7 @@ class StrummingHandler(object):
         self.controller = controller
         self.guitar = guitar
         self.last_z = None
+        self.last_string = None
         self.max_y = 220 # play NO sound when index finger is too high
         print('Strumming handler added.')
 
@@ -55,13 +56,17 @@ class StrummingHandler(object):
             for string in range(6, 0, -1):
                 if self.last_z > self.string_positions[string]\
                 and self.string_positions[string] > new_z:
-                    self.guitar.play_string(string)
+                    if string == 6 or self.last_string is None or self.last_string != string:
+                        self.guitar.play_string(string)
+                        self.last_string = string
 
         # Strumming up
         if new_z > self.last_z:
             for string in range(1, 7):
                 if self.last_z < self.string_positions[string]\
                 and self.string_positions[string] < new_z:
-                    self.guitar.play_string(string)
+                    if string == 1 or self.last_string is None or self.last_string != string: 
+                        self.guitar.play_string(string)
+                        self.last_string = string
 
         self.last_z = new_z
