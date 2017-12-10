@@ -106,7 +106,7 @@ function vibrateString(i) {
  */
 function selectChord(i) {
     chordSelects[i].css('background-color', 'rgba(50, 20, 0, 0.3)');
-    if (currentChord != null) {
+    if (currentChord != null && currentChord != chordSelects[i]) {
         currentChord.css('background-color', 'rgba(50, 50, 50, 0.3)');
     }
     currentChord = chordSelects[i];
