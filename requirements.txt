@@ -3,3 +3,4 @@ sphinx==1.6.5
 sphinx-rtd-theme==0.2.4
 flask==0.12.2
 flask_socketio==2.9.3
+eventlet=0.21.0
