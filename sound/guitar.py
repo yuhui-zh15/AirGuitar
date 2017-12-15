@@ -1,5 +1,4 @@
-from mingus.containers import Note, NoteContainer
-import random
+from mingus.containers import Note
 
 class GuitarNote(Note):
     '''Represent a note on guitar.
@@ -67,7 +66,7 @@ class Guitar(object):
         '''Press a chord on the guitar.
 
         Note: all previously set states will be discarded.
-        
+
         :param chord_name: name of the chord
         :type chord_name: str
         '''
@@ -81,12 +80,14 @@ class Guitar(object):
         for pos in chord_pos:
             self.set_string(*pos)
 
+        self.player.set_chord(chord_name)
         print('Set chord ' + chord_name)
 
     def play_string(self, string):
         '''Play a specific string'''
         if 1 <= string and string <= 6:
             if self.string_states[string] >= 0:
+                self.player.pick_string(string)
                 self.player.play_notes(GuitarNote(string, self.string_states[string]))
         else:
             print('String index out of range!')

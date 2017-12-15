@@ -1,5 +1,6 @@
 from mingus.containers import Note, NoteContainer
 from mingus.midi import fluidsynth
+from sound.socketplayer import pick_string, set_chord
 
 class Player:
     '''Sound provider for an instrument simulator.
@@ -13,6 +14,12 @@ class Player:
 
     def __init__(self, live=True):
         self.live = live
+
+    def pick_string(self, string):
+        pick_string(string)
+
+    def set_chord(self, chord_name):
+        set_chord(chord_name)
 
     def play_notes(self, notes):
         '''Add a note or a list of notes to the player

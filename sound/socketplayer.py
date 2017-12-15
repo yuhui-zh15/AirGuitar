@@ -11,13 +11,16 @@ socketio = SocketIO(app)
 def start_server():
     socketio.run(app)
 
-@socketio.on('my event')
-def handle_my_custom_event(json):
-    print('received json: ' + str(json))
-
 thread = Thread(target=start_server)
-if __name__ == '__main__':
+def socket_player_start():
     thread.start()
-    while True:
-        socketio.sleep(1)
-        socketio.emit('strum', 1, broadcast=True)
+
+def pick_string(string):
+    socketio.emit('pick', string, broadcast=True)
+
+def set_chord(chord_name):
+    socketio.emit('set chord', chord_name, broadcast=True)
+
+@socketio.on('on connect')
+def handle_onConnect_event(json):
+    print('received json: ' + str(json))

@@ -1,6 +1,5 @@
 var NUM_STRING = 6;
 strings = new Array(NUM_STRING + 1);    // 1-indexed to keep consistent with python code.
-buttons = new Array(NUM_STRING + 1);    // Only for debugging.
 
 var NUM_CHORD = 9;
 chordNames = ['G', 'Am', 'Bm', 'C', 'D', 'Em', 'G', 'Am', 'Bm'];
@@ -10,7 +9,6 @@ currentChord = null;
 $(document).ready(function() {
     for (var i = 1; i <= NUM_STRING; i++) {
         createString(i);
-        createButton(i);
     }
 
     for (var i = 0; i < NUM_CHORD; i++) {
@@ -31,19 +29,6 @@ $(document).ready(function() {
         string.css('height', THICKNESS + 'px');
         string.css('top', (START_TOP + i * SPACING) + 'vh');
         strings[i] = string;
-    }
-
-    function createButton(i) {
-        button = jQuery('<button/>', {
-            id: 'button' + i,
-            text: 'Click me!'
-        });
-        button.click(function() {
-            vibrateString(i);
-        });
-        $('#container-left').append(button);
-        $('#container-left').append('<br />');
-        buttons[i] = button;
     }
 
     function createChordSelect(i) {
@@ -71,7 +56,6 @@ $(document).ready(function() {
 
 /**
  * Vibrates the ith guitar string when user swips the guitar with right hand.
- * Currently controlled by html buttons.
  */
 function vibrateString(i) {
     string = strings[i];

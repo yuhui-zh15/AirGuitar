@@ -1,11 +1,13 @@
 import time
 import Leap
 from motion import AirListener, StrummingHandler, ChordHandler
-from sound import Guitar, Player
+from sound import Guitar, Player, socket_player_start
 
 class App(object):
     def start(self):
         print('AirGuitar Started')
+        socket_player_start()
+        
         self.guitar = Guitar(Player())
         self.controller = Leap.Controller()
         self.listener = AirListener()
