@@ -1,6 +1,6 @@
 from mingus.containers import Note, NoteContainer
 from mingus.midi import fluidsynth
-from sound.socketplayer import pick_string, set_chord
+from .server import pick_string, set_chord
 
 class Player:
     '''Sound provider for an instrument simulator.

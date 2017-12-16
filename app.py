@@ -6,7 +6,6 @@ from sound import Guitar, Player, socket_player_start
 class App(object):
     def start(self):
         print('AirGuitar Started')
-        socket_player_start()
         
         self.guitar = Guitar(Player())
         self.controller = Leap.Controller()
@@ -17,11 +16,11 @@ class App(object):
 
         self.controller.add_listener(self.listener)
 
+        socket_player_start()
+
 class ConsoleApp(App):
     def start(self):
         super(ConsoleApp, self).start()
-        while True:
-            time.sleep(1)
 
 if __name__ == '__main__':
     app = ConsoleApp()
