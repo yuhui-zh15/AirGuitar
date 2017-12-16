@@ -2,6 +2,17 @@
 ## Introduction
 AirGuitar = guitar + leap
 
+## How to Play
+```bash
+# open a terminal
+python2 app.py
+
+# open a new terminal
+cd ui
+python2 -m SimpleHTTPServer
+# visit localhost:8000/guitar.html in your browser.
+```
+
 ## Documentation
 Can be found at [AirGuitar Doc](https://yuhui-zh15.github.io/AirGuitar/).
 
@@ -60,4 +71,3 @@ from mingus.midi import fluidsynth
 fluidsynth.init('raw/FluidR3_GM.sf2')
 fluidsynth.play_Note(60)
 ```
-

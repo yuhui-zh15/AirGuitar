@@ -5,8 +5,22 @@ function fetch() {
     $.post(URL + FETCH, {'query': 'pick_string'},
     function(data, status) {
         if (data !== 'None')
+        {
             vibrateString(Number(data))
+        }
+    });
+
+    $.post(URL + FETCH, {'query': 'set_chord'},
+    function(data, status) {
+        if (data !== 'None')
+        {
+            let chord_idx = chordNames.indexOf(data);
+            if (chord_idx > -1)
+            {
+                selectChord(chord_idx);
+            }
+        }
     });
 }
 
-setInterval(fetch, 50);
+setInterval(fetch, 25);

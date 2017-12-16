@@ -1,5 +1,3 @@
-
-
 strings_picked = []
 chords_set= []
 to_send_string = 0
