@@ -23,4 +23,4 @@ function fetch() {
     });
 }
 
-setInterval(fetch, 25);
+setInterval(fetch, 50);

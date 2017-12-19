@@ -18,9 +18,9 @@ $(document).ready(function() {
     // Currently the positions are hard-coded, but by using 'vh' & 'vw',
     // they are supposed to be constrained by a percentage w.r.t the viewport.
     function createString(i) {
-        var START_TOP = 1.7;
-        var SPACING = 6;
-        var THICKNESS = 2;
+        var START_TOP = 60;
+        var SPACING = 5;
+        var THICKNESS = 1 + i / 2; 
         string = jQuery('<hr/>', {
             id: 'string' + i,
             class: 'guitar-string'
@@ -32,7 +32,7 @@ $(document).ready(function() {
     }
 
     function createChordSelect(i) {
-        var START_TOP = 45;
+        var START_TOP = 25;
         var START_LEFT = 33;
         var sideLen = Math.sqrt(NUM_CHORD);
         var sizeH = 12 * 1.2;

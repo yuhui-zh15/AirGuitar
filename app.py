@@ -4,9 +4,11 @@ from sound import Guitar, Player, fetch
 
 from flask import Flask, request
 from flask_cors import CORS
-
+import logging
 app = Flask(__name__)
 CORS(app)
+logger = logging.getLogger('werkzeug')
+logger.setLevel(logging.ERROR)
 
 @app.route("/fetch", methods=['POST'])
 def picked():
