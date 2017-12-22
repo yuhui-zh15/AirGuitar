@@ -57,41 +57,6 @@ $(document).ready(function() {
 });
 
 /**
- * Vibrates the ith guitar string when user swips the guitar with right hand.
- */
-function vibrateString(i) {
-    // string = strings[i];
-    // var MAX_VIBRATE_COEFF = 8;
-
-    // // TODO: more elegant method required (could not get createjs to work...)
-    // var coeffExpand = 1;
-    // var intervalExpand = setInterval(function() {
-    //     if (coeffExpand == MAX_VIBRATE_COEFF) {
-    //         clearInterval(intervalExpand);
-    //     } else {
-    //         coeffExpand++;
-    //         string.css('height', (2 + coeffExpand) + 'px');
-    //         string.css('background-color', 'rgba(50, 50, 50, ' + (1.0 / (coeffExpand + 1)) + ')');
-    //     }
-    // }, 50);
-
-    // var coeffShrink = MAX_VIBRATE_COEFF;
-    // var intervalShrink = setInterval(function() {
-    //     if (coeffShrink == 1) {
-    //         clearInterval(intervalShrink);
-    //     } else {
-    //         coeffShrink--;
-    //         string.css('height', (2 + coeffShrink) + 'px');
-    //         string.css('background-color', 'rgba(50, 50, 50, ' + (1.0 / (coeffShrink + 1)) + ')');
-    //     }
-    // }, 50);
-    // steps[i] = 16 - i;
-    if (steps[i] > 8) {
-        steps[i] = 16 - steps[i];
-    }
-}
-
-/**
  * Actions to take when user sets a chord with left hand.
  */
 function selectChord(i) {
@@ -102,25 +67,18 @@ function selectChord(i) {
     currentChord = chordSelects[i];
 }
 
+
+/**
+ * Vibrates the ith guitar string when user swips the guitar with right hand.
+ */
+function vibrateString(i) {
+    if (steps[i] > 8) {
+        steps[i] = 16 - steps[i];
+    }
+}
+
 function updateStrings() {
-    heights = [
-        3, 
-        4, 
-        5, 
-        6, 
-        7, 
-        8, 
-        9, 
-        10,
-        10,
-        9, 
-        8, 
-        7, 
-        6, 
-        5, 
-        4, 
-        3        
-    ];
+    heights = [3, 4, 5, 6, 7, 8, 9, 10, 10, 9, 8, 7, 6, 5, 4, 3];
     colors = [
         'rgba(50, 50, 50, 0.5)',
         'rgba(50, 50, 50, 0.333333333333)',
@@ -142,7 +100,6 @@ function updateStrings() {
     for (var i = 1; i <= NUM_STRING; i++) {
         if (steps[i] != 16) {
             strings[i].css('height', (heights[steps[i]] - 2 + i / 2) + 'px');
-            console.log((heights[steps[i]] - 2 + i / 2) + 'px');
             strings[i].css('background-color', colors[steps[i]]);
             steps[i]++;
         }
