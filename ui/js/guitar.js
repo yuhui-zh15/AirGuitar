@@ -1,5 +1,6 @@
 var NUM_STRING = 6;
 strings = new Array(NUM_STRING + 1);    // 1-indexed to keep consistent with python code.
+steps = new Array(NUM_STRING + 1);
 
 var NUM_CHORD = 9;
 chordNames = ['G', 'Am', 'Bm', 'C', 'D', 'Em', 'G', 'Am', 'Bm'];
@@ -29,6 +30,7 @@ $(document).ready(function() {
         string.css('height', THICKNESS + 'px');
         string.css('top', (START_TOP + i * SPACING) + 'vh');
         strings[i] = string;
+        steps[i] = 16;
     }
 
     function createChordSelect(i) {
@@ -55,37 +57,6 @@ $(document).ready(function() {
 });
 
 /**
- * Vibrates the ith guitar string when user swips the guitar with right hand.
- */
-function vibrateString(i) {
-    string = strings[i];
-    var MAX_VIBRATE_COEFF = 8;
-
-    // TODO: more elegant method required (could not get createjs to work...)
-    var coeffExpand = 1;
-    var intervalExpand = setInterval(function() {
-        if (coeffExpand == MAX_VIBRATE_COEFF) {
-            clearInterval(intervalExpand);
-        } else {
-            coeffExpand++;
-            string.css('height', (2 + coeffExpand) + 'px');
-            string.css('background-color', 'rgba(50, 50, 50, ' + (1.0 / (coeffExpand + 1)) + ')');
-        }
-    }, 50);
-
-    var coeffShrink = MAX_VIBRATE_COEFF;
-    var intervalShrink = setInterval(function() {
-        if (coeffShrink == 0) {
-            clearInterval(intervalShrink);
-        } else {
-            coeffShrink--;
-            string.css('height', (2 + coeffShrink) + 'px');
-            string.css('background-color', 'rgba(50, 50, 50, ' + (1.0 / (coeffShrink + 1)) + ')');
-        }
-    }, 50);
-}
-
-/**
  * Actions to take when user sets a chord with left hand.
  */
 function selectChord(i) {
@@ -95,3 +66,44 @@ function selectChord(i) {
     }
     currentChord = chordSelects[i];
 }
+
+
+/**
+ * Vibrates the ith guitar string when user swips the guitar with right hand.
+ */
+function vibrateString(i) {
+    if (steps[i] > 8) {
+        steps[i] = 16 - steps[i];
+    }
+}
+
+function updateStrings() {
+    heights = [3, 4, 5, 6, 7, 8, 9, 10, 10, 9, 8, 7, 6, 5, 4, 3];
+    colors = [
+        'rgba(50, 50, 50, 0.5)',
+        'rgba(50, 50, 50, 0.333333333333)',
+        'rgba(50, 50, 50, 0.25)',
+        'rgba(50, 50, 50, 0.2)',
+        'rgba(50, 50, 50, 0.166666666667)',
+        'rgba(50, 50, 50, 0.142857142857)',
+        'rgba(50, 50, 50, 0.125)',
+        'rgba(50, 50, 50, 0.111111111111)',
+        'rgba(50, 50, 50, 0.111111111111)',
+        'rgba(50, 50, 50, 0.125)',
+        'rgba(50, 50, 50, 0.142857142857)',
+        'rgba(50, 50, 50, 0.166666666667)',
+        'rgba(50, 50, 50, 0.2)',
+        'rgba(50, 50, 50, 0.25)',
+        'rgba(50, 50, 50, 0.333333333333)',
+        'rgba(50, 50, 50, 0.5)'
+    ];
+    for (var i = 1; i <= NUM_STRING; i++) {
+        if (steps[i] != 16) {
+            strings[i].css('height', (heights[steps[i]] - 2 + i / 2) + 'px');
+            strings[i].css('background-color', colors[steps[i]]);
+            steps[i]++;
+        }
+    }
+}
+
+setInterval(updateStrings, 30);
