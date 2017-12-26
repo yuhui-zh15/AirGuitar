@@ -21,6 +21,18 @@ function fetch() {
             }
         }
     });
+
+    $.post(URL + FETCH, {'query': 'track_chord'},
+    function(data, status) {
+        if (data !== 'None')
+        {
+            let chord_idx = chordNames.indexOf(data);
+            if (chord_idx > -1)
+            {
+                trackChord(chord_idx);
+            }
+        }
+    });
 }
 
 setInterval(fetch, 50);

@@ -6,6 +6,7 @@ var NUM_CHORD = 9;
 chordNames = ['Em', 'Am', 'Dm', 'G', 'C', 'F', 'Em7', 'D', 'Bm'];
 chordSelects = new Array(NUM_CHORD);    // 0-indexed to keep consistent with python code.
 currentChord = null;
+selectedChord = null;
 
 $(document).ready(function() {
     for (var i = 1; i <= NUM_STRING; i++) {
@@ -21,7 +22,7 @@ $(document).ready(function() {
     function createString(i) {
         var START_TOP = 60;
         var SPACING = 5;
-        var THICKNESS = 1 + i / 2; 
+        var THICKNESS = 1 + i / 2;
         string = jQuery('<hr/>', {
             id: 'string' + i,
             class: 'guitar-string'
@@ -44,9 +45,6 @@ $(document).ready(function() {
             class: 'chord-select',
             text: chordNames[i]
         });
-        chordSelect.click(function() {
-            selectChord(i);
-        })
         $('#container-bottom').append(chordSelect);
         chordSelect.css('height', sizeH + 'vh');
         chordSelect.css('width', sizeW + 'vw');
@@ -57,14 +55,31 @@ $(document).ready(function() {
 });
 
 /**
- * Actions to take when user sets a chord with left hand.
+ * Actions to take when the user moves left hand.
  */
-function selectChord(i) {
-    chordSelects[i].css('background-color', 'rgba(50, 20, 0, 0.3)');
-    if (currentChord != null && currentChord != chordSelects[i]) {
+function trackChord(i) {
+    console.log('track' + chordSelects[i]);
+    if (chordSelects[i] !== selectedChord)
+    {
+        chordSelects[i].css('background-color', 'rgba(50, 20, 0, 0.3)');
+    }
+    if (currentChord !== null && currentChord !== chordSelects[i] &&
+        currentChord !== selectedChord) {
         currentChord.css('background-color', 'rgba(50, 50, 50, 0.3)');
     }
     currentChord = chordSelects[i];
+}
+
+/**
+ * Actions to take when the user tap and select a chord.
+ */
+function selectChord(i) {
+    console.log('select' + chordSelects[i]);
+    chordSelects[i].css('background-color', 'rgba(20, 0, 50, 0.3)');
+    if (selectedChord != null && selectedChord != chordSelects[i]) {
+        selectedChord.css('background-color', 'rgba(50, 50, 50, 0.3)');
+    }
+    selectedChord = chordSelects[i];
 }
 
 

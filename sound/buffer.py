@@ -2,6 +2,7 @@ strings_picked = []
 chords_set= []
 to_send_string = 0
 to_send_chord= 0
+track_chord_name = 'Em'
 
 def fetch(query):
     if query == 'pick_string':
@@ -9,6 +10,9 @@ def fetch(query):
         if to_send_string < len(strings_picked):
             to_send_string += 1
             return strings_picked[to_send_string - 1]
+
+    if query == 'track_chord':
+        return track_chord_name
 
     if query == 'set_chord':
         global chords_set, to_send_chord
