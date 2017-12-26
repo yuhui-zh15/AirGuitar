@@ -16,6 +16,7 @@ class ChordHandler(object):
     def __init__(self, controller, guitar):
         self.controller = controller
         self.guitar = guitar
+        self.last_touch_y = 1000
         print('Chord handler added.')
 
     def process(self, frame):
@@ -40,8 +41,9 @@ class ChordHandler(object):
         self.move_to(touch_x, touch_z)
 
         touch_y = index_finger.joint_position(Leap.Finger.JOINT_TIP).y
-        if touch_y < 80:
+        if self.last_touch_y > 80 and 80 > touch_y:
             self.guitar.set_chord(sound.buffer.track_chord_name)
+        self.last_touch_y = touch_y
 
     def move_to(self, touch_x, touch_z):
         '''When the left finger tap change chord.
