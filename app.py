@@ -20,8 +20,8 @@ def picked():
     '''
     query = request.form['query']
     fetched = fetch(query)
-    if fetched is not None:
-        print('Fetched', fetched)
+    # if fetched is not None:
+    #     print('Fetched', fetched)
     return str(fetched)
 
 class App(object):

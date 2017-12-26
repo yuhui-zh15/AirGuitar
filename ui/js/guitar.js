@@ -3,7 +3,7 @@ strings = new Array(NUM_STRING + 1);    // 1-indexed to keep consistent with pyt
 steps = new Array(NUM_STRING + 1);
 
 var NUM_CHORD = 9;
-chordNames = ['G', 'Am', 'Bm', 'C', 'D', 'Em', 'G', 'Am', 'Bm'];
+chordNames = ['Em', 'Am', 'Dm', 'G', 'C', 'F', 'Em7', 'D', 'Bm'];
 chordSelects = new Array(NUM_CHORD);    // 0-indexed to keep consistent with python code.
 currentChord = null;
 
