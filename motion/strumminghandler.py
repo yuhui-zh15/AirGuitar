@@ -7,7 +7,7 @@ class StrummingHandler(object):
     :param guitar: the guitar that the handler takes action on.
     '''
 
-    string_positions = [None, -150, -100, -50, 0, 50, 100]
+    string_positions = [None, -60, -40, -20, 0, 20, 40]
 
     def __init__(self, controller, guitar):
         self.controller = controller
@@ -65,7 +65,7 @@ class StrummingHandler(object):
             for string in range(1, 7):
                 if self.last_z < self.string_positions[string]\
                 and self.string_positions[string] < new_z:
-                    if string == 1 or self.last_string is None or self.last_string != string: 
+                    if string == 1 or self.last_string is None or self.last_string != string:
                         self.guitar.play_string(string)
                         self.last_string = string
 
