@@ -61,11 +61,11 @@ function trackChord(i) {
     console.log('track' + chordSelects[i]);
     if (chordSelects[i] !== selectedChord)
     {
-        chordSelects[i].css('background-color', 'rgba(50, 20, 0, 0.3)');
+        chordSelects[i].css('background-color', 'rgba(50, 20, 0, 0.5)');
     }
     if (currentChord !== null && currentChord !== chordSelects[i] &&
         currentChord !== selectedChord) {
-        currentChord.css('background-color', 'rgba(50, 50, 50, 0.3)');
+        currentChord.css('background-color', 'rgba(50, 50, 50, 0.5)');
     }
     currentChord = chordSelects[i];
 }
@@ -75,9 +75,9 @@ function trackChord(i) {
  */
 function selectChord(i) {
     console.log('select' + chordSelects[i]);
-    chordSelects[i].css('background-color', 'rgba(20, 0, 50, 0.3)');
+    chordSelects[i].css('background-color', 'rgba(20, 0, 50, 0.5)');
     if (selectedChord != null && selectedChord != chordSelects[i]) {
-        selectedChord.css('background-color', 'rgba(50, 50, 50, 0.3)');
+        selectedChord.css('background-color', 'rgba(50, 50, 50, 0.5)');
     }
     selectedChord = chordSelects[i];
 }

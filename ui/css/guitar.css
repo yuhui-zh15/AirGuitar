@@ -16,7 +16,7 @@ hr.guitar-string {
 }
 
 div.chord-select {
-    background-color: rgba(50, 50, 50, 0.3);
+    background-color: rgba(50, 50, 50, 0.5);
     display: table-cell;
     text-align: center;
     vertical-align: middle;
