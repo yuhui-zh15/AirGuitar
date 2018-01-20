@@ -65,7 +65,7 @@ function trackChord(i) {
     }
     if (currentChord !== null && currentChord !== chordSelects[i] &&
         currentChord !== selectedChord) {
-        currentChord.css('background-color', 'rgba(50, 50, 50, 0.3)');
+        currentChord.css('background-color', 'rgba(255, 255, 255, 0.3)');
     }
     currentChord = chordSelects[i];
 }
@@ -75,9 +75,9 @@ function trackChord(i) {
  */
 function selectChord(i) {
     console.log('select' + chordSelects[i]);
-    chordSelects[i].css('background-color', 'rgba(20, 0, 50, 0.3)');
+    chordSelects[i].css('background-color', 'rgba(50, 100, 50, 0.3)');
     if (selectedChord != null && selectedChord != chordSelects[i]) {
-        selectedChord.css('background-color', 'rgba(50, 50, 50, 0.3)');
+        selectedChord.css('background-color', 'rgba(255, 255, 255, 0.3)');
     }
     selectedChord = chordSelects[i];
 }
@@ -95,26 +95,26 @@ function vibrateString(i) {
 function updateStrings() {
     heights = [3, 4, 5, 6, 7, 8, 9, 10, 10, 9, 8, 7, 6, 5, 4, 3];
     colors = [
-        'rgba(50, 50, 50, 0.5)',
-        'rgba(50, 50, 50, 0.333333333333)',
-        'rgba(50, 50, 50, 0.25)',
-        'rgba(50, 50, 50, 0.2)',
-        'rgba(50, 50, 50, 0.166666666667)',
-        'rgba(50, 50, 50, 0.142857142857)',
-        'rgba(50, 50, 50, 0.125)',
-        'rgba(50, 50, 50, 0.111111111111)',
-        'rgba(50, 50, 50, 0.111111111111)',
-        'rgba(50, 50, 50, 0.125)',
-        'rgba(50, 50, 50, 0.142857142857)',
-        'rgba(50, 50, 50, 0.166666666667)',
-        'rgba(50, 50, 50, 0.2)',
-        'rgba(50, 50, 50, 0.25)',
-        'rgba(50, 50, 50, 0.333333333333)',
-        'rgba(50, 50, 50, 0.5)'
+        'rgba(255, 255, 255, 1)',
+        'rgba(255, 255, 255, 0.5)',
+        'rgba(255, 255, 255, 0.333)',
+        'rgba(255, 255, 255, 0.2)',
+        'rgba(255, 255, 255, 0.166666666667)',
+        'rgba(255, 255, 255, 0.142857142857)',
+        'rgba(255, 255, 255, 0.125)',
+        'rgba(255, 255, 255, 0.111111111111)',
+        'rgba(255, 255, 255, 0.111111111111)',
+        'rgba(255, 255, 255, 0.125)',
+        'rgba(255, 255, 255, 0.142857142857)',
+        'rgba(255, 255, 255, 0.166666666667)',
+        'rgba(255, 255, 255, 0.2)',
+        'rgba(255, 255, 255, 0.333)',
+        'rgba(255, 255, 255, 0.5)',
+        'rgba(255, 255, 255, 1)'
     ];
     for (var i = 1; i <= NUM_STRING; i++) {
         if (steps[i] != 16) {
-            strings[i].css('height', (heights[steps[i]] - 2 + i / 2) + 'px');
+            strings[i].css('height', (heights[steps[i]] * 3 - 2 + i / 2) + 'px');
             strings[i].css('background-color', colors[steps[i]]);
             steps[i]++;
         }
