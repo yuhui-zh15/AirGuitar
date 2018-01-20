@@ -1,4 +1,5 @@
 import Leap
+import sound.buffer
 
 class ChordHandler(object):
     '''Process a chord and use the data of left hand.
@@ -7,38 +8,42 @@ class ChordHandler(object):
     :param guitar: the guitar that the handler takes action on.
     '''
 
-    division_x = [-200, -50]
-    division_z = [-100, 100]
+    division_x = [-80, -30]
+    division_z = [-25, 25]
 
-    chord_list = [['G', 'Am', 'Bm'], ['C', 'D', 'Em'], ['G', 'Am', 'Bm']] # Fron left to right, from up to bottom
+    chord_list = [['Em', 'Am', 'Dm'], ['G', 'C', 'F'], ['Em7', 'D', 'Bm']] # Fron left to right, from up to bottom
 
     def __init__(self, controller, guitar):
         self.controller = controller
-        self.controller.enable_gesture(Leap.Gesture.TYPE_KEY_TAP)
-        self.controller.config.set("Gesture.KeyTap.MinDownVelocity", 30.0)
-        self.controller.config.set("Gesture.KeyTap.HistorySeconds", .2)
-        self.controller.config.set("Gesture.KeyTap.MinDistance", 0.8)
-        self.controller.config.save()
         self.guitar = guitar
+        self.last_touch_y = 1000
         print('Chord handler added.')
 
     def process(self, frame):
         '''Capture the left hand's keytap in the frame.'''
-        key_tap = None
-        for gesture in frame.gestures():
-            if gesture.type is Leap.Gesture.TYPE_KEY_TAP:
-                key_tap = Leap.KeyTapGesture(gesture)
-        if key_tap is None: return
-        
         left_hand = None
-        for hand in key_tap.hands:
+        for hand in frame.hands:
             if hand.is_left:
                 left_hand = hand
                 break
         if left_hand is None: return
 
-        touch_x, touch_z = key_tap.position.x, key_tap.position.z
+        index_finger = None
+        for finger in left_hand.fingers:
+            if finger.type == Leap.Finger.TYPE_INDEX:
+                index_finger = finger
+                break
+        if index_finger is None: return
+
+        touch_x = index_finger.joint_position(Leap.Finger.JOINT_TIP).x
+        touch_z = index_finger.joint_position(Leap.Finger.JOINT_TIP).z
+
         self.move_to(touch_x, touch_z)
+
+        touch_y = index_finger.joint_position(Leap.Finger.JOINT_TIP).y
+        if self.last_touch_y > 80 and 80 > touch_y:
+            self.guitar.set_chord(sound.buffer.track_chord_name)
+        self.last_touch_y = touch_y
 
     def move_to(self, touch_x, touch_z):
         '''When the left finger tap change chord.
@@ -64,7 +69,6 @@ class ChordHandler(object):
             z_index = 1
         elif (self.division_z[1] < touch_z):
             z_index = 2
-        
-        # Set chord
-        self.guitar.set_chord(self.chord_list[z_index][x_index])
 
+        # Set chord
+        sound.buffer.track_chord_name = self.chord_list[z_index][x_index]
