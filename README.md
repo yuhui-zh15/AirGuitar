@@ -4,13 +4,13 @@ AirGuitar = guitar + leap
 
 ## How to Play
 ```bash
-# open a terminal
+# open a terminal - for native server using leap motion api
 python2 app.py
 
-# open a new terminal
+# open another terminal - for web user interface
 cd ui
 python2 -m SimpleHTTPServer
-# visit localhost:8000/guitar.html in your browser.
+# visit localhost:8000/guitar2.html in your browser.
 ```
 
 ## Documentation
@@ -27,20 +27,22 @@ export PYTHONPATH=$PYTHONPATH:<path/to/LeapSDK/lib>
 # Do this everytime when you open a terminal or add this line to ~/.profile
 ```
 
-2. Add the project root path to python2 sys.path, for example, on unix:
+2. cd to the project path:
 
 ```bash
-export PYTHONPATH=$PYTHONPATH:<path/to/AirGuitar>
+cd <path/to/AirGuitar>
 ```
 
-Now you should import Leap and the AirGuitar modulesproperly.
+Now you should import Leap and the AirGuitar modules properly.
 
 ```python
+# python2
 import Leap
 import sound
+import motion
 ```
 
-If not, inspect your sys.path to see if the `AirGuitar` and `LeapSDK/lib` folder is included.
+If not, inspect your sys.path to see if the  `LeapSDK/lib` folder is included.
 
 ```python
 import sys
@@ -71,3 +73,4 @@ from mingus.midi import fluidsynth
 fluidsynth.init('raw/FluidR3_GM.sf2')
 fluidsynth.play_Note(60)
 ```
+
