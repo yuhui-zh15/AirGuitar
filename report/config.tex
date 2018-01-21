@@ -14,15 +14,19 @@
 \usepackage{booktabs} % 表格上的不同横线
 \usepackage{ifthen}
 \usepackage{longtable}
+\usepackage{titlesec}
 \usepackage[top = 1in, bottom = 1in, left = 1in, right = 1in]{geometry}
 
+% section居中
+\titleformat*{\section}{\sanhao \bf \centering}
+
 % for mac
-% \setmonofont[Mapping={}]{Monaco}  %英文引号之类的正常显示，相当于设置英文字体
+% \setmonofont[Mapping={}]{Menlo}  %英文引号之类的正常显示，相当于设置英文字体
 % \setsansfont{Monaco} %设置英文字体 Monaco, Consolas,  Fantasque Sans Mono
 
 % for windows
-\setmonofont[Mapping={}]{Monaco}  %英文引号之类的正常显示，相当于设置英文字体
-\setsansfont{Monaco} %设置英文字体 Monaco, Consolas,  Fantasque Sans Mono
+\setmonofont[Mapping={}]{Menlo}  %英文引号之类的正常显示，相当于设置英文字体
+\setsansfont{Menlo} %设置英文字体 Monaco, Consolas,  Fantasque Sans Mono
 
 \newcommand{\image}[3][3in]{
     \begin{figure}[H]
@@ -114,14 +118,6 @@
 
 \newcommand{\tablesixL}[6] {
     \begin{table}[H] \centering
-    \begin{tabular}{ l l l l l p{5cm} }
-    \toprule
-    \textbf{#1} & \textbf{#2} & \textbf{#3} & \textbf{#4} & \textbf{#5} & \textbf{#6} \\
-    \midrule
-}
-
-\newcommand{\tablesixLL}[6] {
-    \begin{table}[H] \centering
     \begin{tabular}{ p{2.3cm} p{2.3cm} p{2.3cm} p{2.3cm} p{2.3cm} p{2.3cm} }
     \toprule
     \textbf{#1} & \textbf{#2} & \textbf{#3} & \textbf{#4} & \textbf{#5} & \textbf{#6} \\
@@ -129,8 +125,8 @@
 }
 
 \newcommand{\longtablesixL}[6] {
-    \begin{longtable}{ l l l l l p{4.3cm} } 
-    \toprule 
+    \begin{longtable}{ l l l l l p{4.3cm} }
+    \toprule
     \textbf{#1} & \textbf{#2} & \textbf{#3} & \textbf{#4} & \textbf{#5} & \textbf{#6} \\
     \midrule
 }
