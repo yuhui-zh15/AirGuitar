@@ -17,3 +17,11 @@ sound\.guitar
     :undoc-members:
     :show-inheritance:
 
+sound\.buffer
+-------------
+
+.. automodule:: sound.buffer
+    :members:
+    :undoc-members:
+    :show-inheritance:
+

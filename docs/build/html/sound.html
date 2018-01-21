@@ -91,6 +91,7 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">sound</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#module-sound.player">sound.player</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-sound.guitar">sound.guitar</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-sound.buffer">sound.buffer</a></li>
 </ul>
 </li>
 </ul>
@@ -173,6 +174,16 @@
 </tbody>
 </table>
 <dl class="method">
+<dt id="sound.player.Player.pick_string">
+<code class="descname">pick_string</code><span class="sig-paren">(</span><em>string</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sound/player.html#Player.pick_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sound.player.Player.pick_string" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sound.player.Player.set_chord">
+<code class="descname">set_chord</code><span class="sig-paren">(</span><em>chord_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sound/player.html#Player.set_chord"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sound.player.Player.set_chord" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
 <dt id="sound.player.Player.play_notes">
 <code class="descname">play_notes</code><span class="sig-paren">(</span><em>notes</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sound/player.html#Player.play_notes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sound.player.Player.play_notes" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add a note or a list of notes to the player
@@ -232,7 +243,7 @@
 </table>
 <dl class="attribute">
 <dt id="sound.guitar.Guitar.chord_dict">
-<code class="descname">chord_dict</code><em class="property"> = {'Em': [(1, 0), (2, 0), (3, 0), (4, 2), (5, 2), (6, 0)], 'C': [(1, 0), (2, 1), (3, 0), (4, 2), (5, 3)], 'D': [(1, 2), (2, 3), (3, 2), (4, 0)], 'G': [(1, 3), (2, 0), (3, 0), (4, 0), (5, 2), (6, 3)], 'D7': [(1, 2), (2, 1), (3, 2), (4, 0)], 'Bm': [(1, 2), (2, 3), (3, 4), (4, 4), (5, 2)], 'Am': [(1, 0), (2, 1), (3, 2), (4, 2), (5, 0)], 'Em7': [(1, 0), (2, 3), (3, 0), (4, 2), (5, 2), (6, 0)]}</em><a class="headerlink" href="#sound.guitar.Guitar.chord_dict" title="Permalink to this definition">¶</a></dt>
+<code class="descname">chord_dict</code><em class="property"> = {'Em': [(1, 0), (2, 0), (3, 0), (4, 2), (5, 2), (6, 0)], 'C': [(1, 0), (2, 1), (3, 0), (4, 2), (5, 3)], 'Dm': [(1, 1), (2, 3), (3, 2), (4, 0)], 'D': [(1, 2), (2, 3), (3, 2), (4, 0)], 'G': [(1, 3), (2, 0), (3, 0), (4, 0), (5, 2), (6, 3)], 'F': [(1, 1), (2, 1), (3, 2), (4, 3), (5, 1), (6, 1)], 'Bm': [(1, 2), (2, 3), (3, 4), (4, 4), (5, 2)], 'Am': [(1, 0), (2, 1), (3, 2), (4, 2), (5, 0)], 'Em7': [(1, 0), (2, 3), (3, 0), (4, 2), (5, 2), (6, 0)], 'D7': [(1, 2), (2, 1), (3, 2), (4, 0)]}</em><a class="headerlink" href="#sound.guitar.Guitar.chord_dict" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -281,6 +292,24 @@
 </dd></dl>
 
 </dd></dl>
+
+</div>
+<div class="section" id="module-sound.buffer">
+<span id="sound-buffer"></span><h2>sound.buffer<a class="headerlink" href="#module-sound.buffer" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="sound.buffer.fetch">
+<code class="descclassname">sound.buffer.</code><code class="descname">fetch</code><span class="sig-paren">(</span><em>query</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sound/buffer.html#fetch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sound.buffer.fetch" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sound.buffer.pick_string">
+<code class="descclassname">sound.buffer.</code><code class="descname">pick_string</code><span class="sig-paren">(</span><em>string</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sound/buffer.html#pick_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sound.buffer.pick_string" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sound.buffer.set_chord">
+<code class="descclassname">sound.buffer.</code><code class="descname">set_chord</code><span class="sig-paren">(</span><em>chord_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sound/buffer.html#set_chord"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sound.buffer.set_chord" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </div>
 </div>

@@ -1,0 +1,295 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>motion.chordhandler &mdash; AirGuitar  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="AirGuitar  documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> AirGuitar
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../motion.html">motion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../sound.html">sound</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">AirGuitar</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>motion.chordhandler</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for motion.chordhandler</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">Leap</span>
+<span class="kn">import</span> <span class="nn">sound.buffer</span>
+
+<div class="viewcode-block" id="ChordHandler"><a class="viewcode-back" href="../../motion.html#motion.chordhandler.ChordHandler">[docs]</a><span class="k">class</span> <span class="nc">ChordHandler</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Process a chord and use the data of left hand.</span>
+
+<span class="sd">    :param controller: the Leap Controller instance.</span>
+<span class="sd">    :param guitar: the guitar that the handler takes action on.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">division_x</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">80</span><span class="p">,</span> <span class="o">-</span><span class="mi">30</span><span class="p">]</span>
+    <span class="n">division_z</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">25</span><span class="p">,</span> <span class="mi">25</span><span class="p">]</span>
+
+    <span class="n">chord_list</span> <span class="o">=</span> <span class="p">[[</span><span class="s1">&#39;Em&#39;</span><span class="p">,</span> <span class="s1">&#39;Am&#39;</span><span class="p">,</span> <span class="s1">&#39;Dm&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;G&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;F&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;Em7&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">,</span> <span class="s1">&#39;Bm&#39;</span><span class="p">]]</span> <span class="c1"># Fron left to right, from up to bottom</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">controller</span><span class="p">,</span> <span class="n">guitar</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">controller</span> <span class="o">=</span> <span class="n">controller</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">guitar</span> <span class="o">=</span> <span class="n">guitar</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_touch_y</span> <span class="o">=</span> <span class="mi">1000</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Chord handler added.&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="ChordHandler.process"><a class="viewcode-back" href="../../motion.html#motion.chordhandler.ChordHandler.process">[docs]</a>    <span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frame</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Capture the left hand&#39;s keytap in the frame.&#39;&#39;&#39;</span>
+        <span class="n">left_hand</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">for</span> <span class="n">hand</span> <span class="ow">in</span> <span class="n">frame</span><span class="o">.</span><span class="n">hands</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">hand</span><span class="o">.</span><span class="n">is_left</span><span class="p">:</span>
+                <span class="n">left_hand</span> <span class="o">=</span> <span class="n">hand</span>
+                <span class="k">break</span>
+        <span class="k">if</span> <span class="n">left_hand</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="k">return</span>
+
+        <span class="n">index_finger</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">for</span> <span class="n">finger</span> <span class="ow">in</span> <span class="n">left_hand</span><span class="o">.</span><span class="n">fingers</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">finger</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">Leap</span><span class="o">.</span><span class="n">Finger</span><span class="o">.</span><span class="n">TYPE_INDEX</span><span class="p">:</span>
+                <span class="n">index_finger</span> <span class="o">=</span> <span class="n">finger</span>
+                <span class="k">break</span>
+        <span class="k">if</span> <span class="n">index_finger</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="k">return</span>
+
+        <span class="n">touch_x</span> <span class="o">=</span> <span class="n">index_finger</span><span class="o">.</span><span class="n">joint_position</span><span class="p">(</span><span class="n">Leap</span><span class="o">.</span><span class="n">Finger</span><span class="o">.</span><span class="n">JOINT_TIP</span><span class="p">)</span><span class="o">.</span><span class="n">x</span>
+        <span class="n">touch_z</span> <span class="o">=</span> <span class="n">index_finger</span><span class="o">.</span><span class="n">joint_position</span><span class="p">(</span><span class="n">Leap</span><span class="o">.</span><span class="n">Finger</span><span class="o">.</span><span class="n">JOINT_TIP</span><span class="p">)</span><span class="o">.</span><span class="n">z</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">move_to</span><span class="p">(</span><span class="n">touch_x</span><span class="p">,</span> <span class="n">touch_z</span><span class="p">)</span>
+
+        <span class="n">touch_y</span> <span class="o">=</span> <span class="n">index_finger</span><span class="o">.</span><span class="n">joint_position</span><span class="p">(</span><span class="n">Leap</span><span class="o">.</span><span class="n">Finger</span><span class="o">.</span><span class="n">JOINT_TIP</span><span class="p">)</span><span class="o">.</span><span class="n">y</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_touch_y</span> <span class="o">&gt;</span> <span class="mi">80</span> <span class="ow">and</span> <span class="mi">80</span> <span class="o">&gt;</span> <span class="n">touch_y</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">guitar</span><span class="o">.</span><span class="n">set_chord</span><span class="p">(</span><span class="n">sound</span><span class="o">.</span><span class="n">buffer</span><span class="o">.</span><span class="n">track_chord_name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_touch_y</span> <span class="o">=</span> <span class="n">touch_y</span></div>
+
+<div class="viewcode-block" id="ChordHandler.move_to"><a class="viewcode-back" href="../../motion.html#motion.chordhandler.ChordHandler.move_to">[docs]</a>    <span class="k">def</span> <span class="nf">move_to</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch_x</span><span class="p">,</span> <span class="n">touch_z</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;When the left finger tap change chord.</span>
+
+<span class="sd">        Change chords when keytap.</span>
+
+<span class="sd">        :param touch_x: the new position on x axis</span>
+<span class="sd">        :type touch_x: float</span>
+<span class="sd">        :param touch_z: the new position on x axis</span>
+<span class="sd">        :type touch_z: float</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">touch_x</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">division_x</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+            <span class="n">x_index</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">division_x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">touch_x</span> <span class="ow">and</span> <span class="n">touch_x</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">division_x</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+            <span class="n">x_index</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">division_x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">touch_x</span><span class="p">):</span>
+            <span class="n">x_index</span> <span class="o">=</span> <span class="mi">2</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">touch_z</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">division_z</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+            <span class="n">z_index</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">division_z</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">touch_z</span> <span class="ow">and</span> <span class="n">touch_z</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">division_z</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+            <span class="n">z_index</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">division_z</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">touch_z</span><span class="p">):</span>
+            <span class="n">z_index</span> <span class="o">=</span> <span class="mi">2</span>
+
+        <span class="c1"># Set chord</span>
+        <span class="n">sound</span><span class="o">.</span><span class="n">buffer</span><span class="o">.</span><span class="n">track_chord_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">chord_list</span><span class="p">[</span><span class="n">z_index</span><span class="p">][</span><span class="n">x_index</span><span class="p">]</span></div></div>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Yuhui Zhang, Zhengping Zhou, Qibin Chen.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

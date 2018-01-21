@@ -91,6 +91,7 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">motion</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#module-motion.airlistener">motion.airlistener</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-motion.strumminghandler">motion.strumminghandler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-motion.chordhandler">motion.chordhandler</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="sound.html">sound</a></li>
@@ -209,7 +210,7 @@
 </table>
 <dl class="attribute">
 <dt id="motion.strumminghandler.StrummingHandler.string_positions">
-<code class="descname">string_positions</code><em class="property"> = [None, -150, -100, -50, 0, 50, 100]</em><a class="headerlink" href="#motion.strumminghandler.StrummingHandler.string_positions" title="Permalink to this definition">¶</a></dt>
+<code class="descname">string_positions</code><em class="property"> = [None, -60, -40, -20, 0, 20, 40]</em><a class="headerlink" href="#motion.strumminghandler.StrummingHandler.string_positions" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -228,6 +229,68 @@
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_z</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) – the new position on z axis</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-motion.chordhandler">
+<span id="motion-chordhandler"></span><h2>motion.chordhandler<a class="headerlink" href="#module-motion.chordhandler" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="motion.chordhandler.ChordHandler">
+<em class="property">class </em><code class="descclassname">motion.chordhandler.</code><code class="descname">ChordHandler</code><span class="sig-paren">(</span><em>controller</em>, <em>guitar</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/motion/chordhandler.html#ChordHandler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#motion.chordhandler.ChordHandler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/2/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>Process a chord and use the data of left hand.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>controller</strong> – the Leap Controller instance.</li>
+<li><strong>guitar</strong> – the guitar that the handler takes action on.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="motion.chordhandler.ChordHandler.division_x">
+<code class="descname">division_x</code><em class="property"> = [-80, -30]</em><a class="headerlink" href="#motion.chordhandler.ChordHandler.division_x" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="motion.chordhandler.ChordHandler.division_z">
+<code class="descname">division_z</code><em class="property"> = [-25, 25]</em><a class="headerlink" href="#motion.chordhandler.ChordHandler.division_z" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="motion.chordhandler.ChordHandler.chord_list">
+<code class="descname">chord_list</code><em class="property"> = [['Em', 'Am', 'Dm'], ['G', 'C', 'F'], ['Em7', 'D', 'Bm']]</em><a class="headerlink" href="#motion.chordhandler.ChordHandler.chord_list" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="motion.chordhandler.ChordHandler.process">
+<code class="descname">process</code><span class="sig-paren">(</span><em>frame</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/motion/chordhandler.html#ChordHandler.process"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#motion.chordhandler.ChordHandler.process" title="Permalink to this definition">¶</a></dt>
+<dd><p>Capture the left hand’s keytap in the frame.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="motion.chordhandler.ChordHandler.move_to">
+<code class="descname">move_to</code><span class="sig-paren">(</span><em>touch_x</em>, <em>touch_z</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/motion/chordhandler.html#ChordHandler.move_to"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#motion.chordhandler.ChordHandler.move_to" title="Permalink to this definition">¶</a></dt>
+<dd><p>When the left finger tap change chord.</p>
+<p>Change chords when keytap.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>touch_x</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) – the new position on x axis</li>
+<li><strong>touch_z</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) – the new position on x axis</li>
+</ul>
+</td>
 </tr>
 </tbody>
 </table>

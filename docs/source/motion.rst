@@ -17,3 +17,11 @@ motion\.strumminghandler
     :undoc-members:
     :show-inheritance:
 
+motion\.chordhandler
+------------------------
+
+.. automodule:: motion.chordhandler
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
