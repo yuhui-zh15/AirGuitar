@@ -34,7 +34,9 @@ class StrummingHandler(object):
         if index_finger is None: return
 
         new_y = index_finger.joint_position(Leap.Finger.JOINT_TIP).y
-        if new_y > self.max_y: return
+        if new_y > self.max_y: 
+            self.last_z = None
+            return
 
         new_z = index_finger.joint_position(Leap.Finger.JOINT_TIP).z
         self.move_to(new_z)
